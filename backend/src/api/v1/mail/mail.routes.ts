@@ -5,7 +5,6 @@ import {
   paramsSchema,
   updateMailBodySchema,
 } from "./mail.schema";
-import { create } from "domain";
 
 export default async function mailRoutes(fastify: FastifyInstance) {
   fastify.get("/", {
@@ -15,6 +14,11 @@ export default async function mailRoutes(fastify: FastifyInstance) {
   fastify.post("/", {
     schema: { body: createMailBodySchema },
     handler: controller.createMail,
+  });
+
+  fastify.get("/:id", {
+    schema: { params: paramsSchema },
+    handler: controller.getMail,
   });
 
   fastify.put("/:id", {
