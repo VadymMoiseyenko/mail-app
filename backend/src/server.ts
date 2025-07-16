@@ -9,7 +9,7 @@ const fastify = Fastify({
 fastify.register(dbPlugin);
 fastify.register(apiV1, { prefix: "/api/v1" });
 
-fastify.listen({ port: 3000 }, function (err, address) {
+fastify.listen({ port: 3001 }, function (err, address) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
