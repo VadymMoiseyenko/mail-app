@@ -1,0 +1,59 @@
+.mailList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mailItem {
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mailItem:hover {
+  background-color: #f0f8ff;
+  border-color: #007acc;
+}
+
+.mailTo {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #007acc;
+  margin-bottom: 0.25rem;
+}
+
+.mailSubject {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.mailPreview {
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mailItem {
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+
+  .mailItem:hover {
+    background-color: #333;
+    border-color: #007acc;
+  }
+
+  .mailSubject {
+    color: #fff;
+  }
+
+  .mailPreview {
+    color: #ccc;
+  }
+}
