@@ -1,11 +1,10 @@
+import {
+  API_ENDPOINTS,
+  ApiResponse,
+  Mail,
+  SearchParams,
+} from "@common/types/mail";
 import apiClient from "./client";
-import { Mail, SearchParams, API_ENDPOINTS } from "./types";
-
-interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-  count: number;
-}
 
 export class MailService {
   /**

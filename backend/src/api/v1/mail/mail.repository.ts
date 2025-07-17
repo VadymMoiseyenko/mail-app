@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import { CreateMailRequest, Mail } from "./mail.types";
+import { CreateMailRequest, Mail, UpdateMailRequest } from "./mail.types";
 
 export class EmailRepository {
   private db: Knex;
@@ -30,7 +30,7 @@ export class EmailRepository {
     return this.db("emails").where("id", id).first();
   }
 
-  async update(id: number, updates: Mail) {
+  async update(id: number, updates: UpdateMailRequest) {
     return this.db("emails").where("id", id).update(updates).returning("*");
   }
 

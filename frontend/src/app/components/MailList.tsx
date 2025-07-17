@@ -1,11 +1,5 @@
 import styles from "./MailList.module.css";
-
-interface Mail {
-  id: number;
-  to: string;
-  subject: string;
-  body: string;
-}
+import { Mail } from "@common/types/mail";
 
 interface MailListProps {
   mails: Mail[];

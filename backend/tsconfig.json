@@ -8,9 +8,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./src", 
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["../common/*"]
+    }
   },
-  "include": ["src/**/*.ts"], 
+  "include": ["src/**/*.ts", "../common/**/*.ts"], 
   "exclude": ["node_modules"] 
 }
