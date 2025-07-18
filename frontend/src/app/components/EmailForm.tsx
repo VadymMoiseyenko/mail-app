@@ -39,12 +39,12 @@ interface EmailFormProps {
   mode?: "create" | "view";
 }
 
-export default function EmailForm({ 
-  initialData, 
-  isReadOnly = false, 
+export default function EmailForm({
+  initialData,
+  isReadOnly = false,
   title,
   showActions = true,
-  mode = "create"
+  mode = "create",
 }: EmailFormProps) {
   const router = useRouter();
   const [submitStatus, setSubmitStatus] = useState<{
@@ -55,7 +55,9 @@ export default function EmailForm({
 
   // Set default title based on mode
   const defaultTitle = mode === "create" ? "Create New Email" : "Email Details";
-  const finalTitle = title || (initialData ? `${defaultTitle} - ${initialData.subject}` : defaultTitle);
+  const finalTitle =
+    title ||
+    (initialData ? `${defaultTitle} - ${initialData.subject}` : defaultTitle);
 
   const {
     register,
@@ -95,7 +97,7 @@ export default function EmailForm({
 
   const onSubmit = async (data: CreateEmailFormData) => {
     if (isReadOnly && !isEditing) return;
-    
+
     try {
       setSubmitStatus({ type: null, message: "" });
 
@@ -131,7 +133,7 @@ export default function EmailForm({
         });
 
         setIsEditing(false);
-        
+
         // Reset form with new data to clear dirty state
         reset(data);
       }
@@ -144,7 +146,9 @@ export default function EmailForm({
       setSubmitStatus({
         type: "error",
         message:
-          error instanceof Error ? error.message : `Failed to ${mode === "create" ? "create" : "update"} email`,
+          error instanceof Error
+            ? error.message
+            : `Failed to ${mode === "create" ? "create" : "update"} email`,
       });
     }
   };
@@ -271,9 +275,13 @@ export default function EmailForm({
                   disabled={isSubmitting || (mode === "view" && !isDirty)}
                   className={`${styles.button} ${styles.primaryButton}`}
                 >
-                  {isSubmitting 
-                    ? (mode === "create" ? "Creating..." : "Updating...") 
-                    : (mode === "create" ? "Create Email" : "Update Email")}
+                  {isSubmitting
+                    ? mode === "create"
+                      ? "Creating..."
+                      : "Updating..."
+                    : mode === "create"
+                    ? "Create Email"
+                    : "Update Email"}
                 </button>
               )}
 
@@ -283,7 +291,11 @@ export default function EmailForm({
                 disabled={isSubmitting}
                 className={`${styles.button} ${styles.secondaryButton}`}
               >
-                {isEditing ? "Cancel Changes" : (mode === "view" ? "Back to List" : "Cancel")}
+                {isEditing
+                  ? "Cancel Changes"
+                  : mode === "view"
+                  ? "Back to List"
+                  : "Cancel"}
               </button>
             </div>
           )}

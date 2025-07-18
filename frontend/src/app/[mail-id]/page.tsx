@@ -22,7 +22,7 @@ const MailDetail = ({ params }: MailDetailProps) => {
       try {
         setLoading(true);
         setError(null);
-        
+
         if (isNaN(mailId)) {
           setError("Invalid mail ID");
           return;
@@ -63,13 +63,7 @@ const MailDetail = ({ params }: MailDetailProps) => {
 
   return (
     <div>
-      {mail && (
-        <EmailForm
-          initialData={mail}
-          mode="view"
-          showActions={true}
-        />
-      )}
+      {mail && <EmailForm initialData={mail} mode="view" showActions={true} />}
     </div>
   );
 };

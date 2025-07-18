@@ -77,7 +77,10 @@ export class MailService {
   /**
    * Update a mail by ID
    */
-  static async updateMail(mailId: number, mailData: UpdateMailRequest): Promise<Mail> {
+  static async updateMail(
+    mailId: number,
+    mailData: UpdateMailRequest
+  ): Promise<Mail> {
     try {
       const response = await apiClient.put<ApiResponse<Mail>>(
         API_ENDPOINTS.MAIL.UPDATE(mailId),
@@ -115,4 +118,5 @@ export class MailService {
 }
 
 // Export individual methods for convenience
-export const { getMails, getMail, createMail, updateMail, deleteMail } = MailService;
+export const { getMails, getMail, createMail, updateMail, deleteMail } =
+  MailService;
