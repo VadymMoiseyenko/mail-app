@@ -1,14 +1,8 @@
-"use client";
-
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import Link from "next/link";
 
 export default function SidebarHeader() {
-  const handleCreateMail = () => {
-    // TODO: Implement create mail functionality
-    console.log("Create mail clicked");
-  };
-
   return (
     <div
       style={{
@@ -28,10 +22,12 @@ export default function SidebarHeader() {
       >
         Mail List
       </h2>
+
       <Button
+        component={Link}
+        href="/create-new"
         variant="text"
         startIcon={<Add />}
-        onClick={handleCreateMail}
         sx={{
           textTransform: "none",
           color: "#1976d2",

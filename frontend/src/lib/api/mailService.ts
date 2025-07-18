@@ -3,6 +3,7 @@ import {
   ApiResponse,
   Mail,
   SearchParams,
+  CreateMailRequest,
 } from "@common/types/mail";
 import apiClient from "./client";
 
@@ -30,7 +31,28 @@ export class MailService {
       return []; // Return empty array instead of undefined
     }
   }
+
+  /**
+   * Create a new mail
+   */
+  static async createMail(mailData: CreateMailRequest): Promise<Mail> {
+    try {
+      const response = await apiClient.post<ApiResponse<Mail>>(
+        API_ENDPOINTS.MAIL.CREATE,
+        mailData
+      );
+
+      if (response.data.success && response.data.data) {
+        return response.data.data;
+      }
+
+      throw new Error(response.data.error || "Failed to create mail");
+    } catch (error) {
+      console.error("Error creating mail:", error);
+      throw error;
+    }
+  }
 }
 
 // Export individual methods for convenience
-export const { getMails } = MailService;
+export const { getMails, createMail } = MailService;

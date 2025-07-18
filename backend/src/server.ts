@@ -6,6 +6,11 @@ const fastify = Fastify({
   logger: true,
 });
 
+fastify.register(require("@fastify/cors"), {
+  origin: ["http://localhost:3000"], // Allow requests from your frontend
+  credentials: true,
+});
+
 fastify.register(dbPlugin);
 fastify.register(apiV1, { prefix: "/api/v1" });
 
