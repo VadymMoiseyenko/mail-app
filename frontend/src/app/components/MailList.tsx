@@ -10,7 +10,7 @@ export default function MailList({ mails }: MailListProps) {
   return (
     <div className={styles.mailList}>
       {mails.map((mail) => (
-        <MailItem key={mail.id} mail={mail} />
+        <MailItem mail={mail} key={mail.id} />
       ))}
     </div>
   );

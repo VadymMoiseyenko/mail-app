@@ -1,6 +1,7 @@
 import styles from "./MailList.module.css";
 import { Mail } from "@common/types/mail";
 import DeleteButton from "./DeleteButton";
+import Link from "next/link";
 
 interface MailItemProps {
   mail: Mail;
@@ -9,15 +10,17 @@ interface MailItemProps {
 export default function MailItem({ mail }: MailItemProps) {
   return (
     <div className={styles.mailItem}>
-      <div className={styles.mailContent}>
-        <div className={styles.mailTo}>{mail.to}</div>
-        <div className={styles.mailSubject}>{mail.subject}</div>
-        <div className={styles.mailPreview}>
-          {mail.body.length > 50
-            ? `${mail.body.substring(0, 50)}...`
-            : mail.body}
+      <Link href={`/${mail.id}`} key={mail.id} className={styles.mailLink}>
+        <div className={styles.mailContent}>
+          <div className={styles.mailTo}>{mail.to}</div>
+          <div className={styles.mailSubject}>{mail.subject}</div>
+          <div className={styles.mailPreview}>
+            {mail.body.length > 50
+              ? `${mail.body.substring(0, 50)}...`
+              : mail.body}
+          </div>
         </div>
-      </div>
+      </Link>
       <div className={styles.mailActions}>
         <DeleteButton mailId={mail.id} />
       </div>
