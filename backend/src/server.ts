@@ -9,6 +9,8 @@ const fastify = Fastify({
 fastify.register(require("@fastify/cors"), {
   origin: ["http://localhost:3000"], // Allow requests from your frontend
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Explicitly allow all methods
+  allowedHeaders: ["Content-Type", "Authorization"],
 });
 
 fastify.register(dbPlugin);

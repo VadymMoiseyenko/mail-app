@@ -52,7 +52,25 @@ export class MailService {
       throw error;
     }
   }
+
+  /**
+   * Delete a mail by ID
+   */
+  static async deleteMail(mailId: number): Promise<void> {
+    try {
+      const response = await apiClient.delete<ApiResponse<null>>(
+        API_ENDPOINTS.MAIL.DELETE(mailId)
+      );
+
+      if (!response.data.success) {
+        throw new Error(response.data.error || "Failed to delete mail");
+      }
+    } catch (error) {
+      console.error("Error deleting mail:", error);
+      throw error;
+    }
+  }
 }
 
 // Export individual methods for convenience
-export const { getMails, createMail } = MailService;
+export const { getMails, createMail, deleteMail } = MailService;
