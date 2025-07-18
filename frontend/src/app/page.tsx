@@ -1,4 +1,5 @@
 import MailList from "./components/MailList";
+import SidebarHeader from "./components/SidebarHeader";
 import styles from "./page.module.css";
 import { getMails } from "@/lib/api";
 
@@ -8,7 +9,7 @@ export default async function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.sidebar}>
-        <h2>Mail List</h2>
+        <SidebarHeader />
         <MailList mails={mails ?? []} />
       </div>
       <div className={styles.content}>
