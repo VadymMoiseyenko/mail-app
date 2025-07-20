@@ -171,7 +171,7 @@ export async function deleteMail(
     // Delete the email
     await request.server.db.emails.delete(emailId);
 
-    reply.code(204).send();
+    reply.code(200).send();
   } catch (error) {
     reply.code(500).send({
       success: false,

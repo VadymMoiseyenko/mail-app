@@ -1,18 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Mail } from "@common/types/mail";
 import { getMail } from "@/lib/api/mailService";
 import EmailForm from "../components/EmailForm";
 
 interface MailDetailProps {
-  params: {
-    "mail-id": string;
-  };
+  params: Promise<{ "mail-id": number }>;
 }
 
 const MailDetail = ({ params }: MailDetailProps) => {
-  const mailId = parseInt(params["mail-id"]);
+  const { "mail-id": mailId } = use(params);
   const [mail, setMail] = useState<Mail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
