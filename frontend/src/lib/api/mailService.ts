@@ -40,7 +40,6 @@ async function getMails(params?: SearchParams): Promise<Mail[]> {
       }
     );
 
-    // Extract data from the wrapped response
     if (response.data.success && response.data.data) {
       return response.data.data;
     }
