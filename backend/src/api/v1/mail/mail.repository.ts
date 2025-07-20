@@ -15,7 +15,9 @@ export class EmailRepository {
       query = query.where(function () {
         this.where("subject", "like", `%${searchQuery}%`)
           .orWhere("body", "like", `%${searchQuery}%`)
-          .orWhere("to", "like", `%${searchQuery}%`);
+          .orWhere("to", "like", `%${searchQuery}%`)
+          .orWhere("cc", "like", `%${searchQuery}%`)
+          .orWhere("bcc", "like", `%${searchQuery}%`);
       });
     }
 

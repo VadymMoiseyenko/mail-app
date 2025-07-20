@@ -10,7 +10,7 @@ export async function listMails(
   reply: FastifyReply
 ) {
   try {
-    const { search } = request.query;
+    const { search } = request.query || {};
     const emails = await request.server.db.emails.list(search);
 
     reply.send({
