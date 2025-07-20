@@ -1,69 +1,35 @@
-"use client";
-
-import { useState, useEffect, use } from "react";
-import { Mail } from "@common/types/mail";
 import { getMail } from "@/lib/api/mailService";
 import EmailForm from "../components/EmailForm";
+import { notFound } from "next/navigation";
 
 interface MailDetailProps {
-  params: Promise<{ "mail-id": number }>;
+  params: Promise<{ "mail-id": string }>;
 }
 
-const MailDetail = ({ params }: MailDetailProps) => {
-  const { "mail-id": mailId } = use(params);
-  const [mail, setMail] = useState<Mail | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const MailDetail = async ({ params }: MailDetailProps) => {
+  const { "mail-id": mailIdStr } = await params;
+  const mailId = parseInt(mailIdStr, 10);
 
-  useEffect(() => {
-    const fetchMail = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        if (isNaN(mailId)) {
-          setError("Invalid mail ID");
-          return;
-        }
-
-        const mailData = await getMail(mailId);
-        if (mailData) {
-          setMail(mailData);
-        } else {
-          setError("Email not found");
-        }
-      } catch (err) {
-        console.error("Error fetching mail:", err);
-        setError("Failed to load email");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMail();
-  }, [mailId]);
-
-  if (loading) {
-    return (
-      <div style={{ padding: "2rem", textAlign: "center" }}>
-        <p>Loading email...</p>
-      </div>
-    );
+  if (isNaN(mailId)) {
+    notFound();
   }
 
-  if (error) {
+  try {
+    const mail = await getMail(mailId);
+
+    if (!mail) {
+      notFound();
+    }
+
     return (
-      <div style={{ padding: "2rem", textAlign: "center" }}>
-        <p style={{ color: "red" }}>Error: {error}</p>
+      <div>
+        <EmailForm initialData={mail} mode="view" showActions={true} />
       </div>
     );
+  } catch (error) {
+    console.error("Error fetching mail:", error);
+    notFound();
   }
-
-  return (
-    <div>
-      {mail && <EmailForm initialData={mail} mode="view" showActions={true} />}
-    </div>
-  );
 };
 
 export default MailDetail;
