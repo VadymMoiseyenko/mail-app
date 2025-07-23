@@ -7,7 +7,7 @@ import {
   SearchParams,
   CreateMailRequest,
   UpdateMailRequest,
-} from "@common/types/mail";
+} from "@common/index";
 import apiClient from "./client";
 import { revalidatePath } from "next/cache";
 
@@ -47,7 +47,7 @@ async function getMails(params?: SearchParams): Promise<Mail[]> {
     return [];
   } catch (error) {
     console.error("Error fetching mails:", error);
-    return []; // Return empty array instead of undefined
+    return [];
   }
 }
 
@@ -63,7 +63,6 @@ async function getMail(mailId: number): Promise<Mail | null> {
 
     return null;
   } catch (error) {
-    console.error("Error fetching mail:", error);
     return null;
   }
 }

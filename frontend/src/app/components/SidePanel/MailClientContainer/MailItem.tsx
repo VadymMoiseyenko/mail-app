@@ -1,7 +1,7 @@
 import styles from "./MailList.module.css";
-import { Mail } from "@common/types/mail";
 import DeleteButton from "./DeleteButton";
 import Link from "next/link";
+import { Mail } from "@common/index";
 
 interface MailItemProps {
   mail: Mail;

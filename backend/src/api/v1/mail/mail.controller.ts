@@ -1,9 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
 import {
-  SearchParams,
   CreateMailRequest,
+  MailParams,
+  SearchParams,
   UpdateMailRequest,
-} from "./mail.types";
+} from "../../../../../common";
+import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function listMails(
   request: FastifyRequest<{ Querystring: SearchParams }>,
@@ -32,6 +33,7 @@ export async function createMail(
   reply: FastifyReply
 ) {
   try {
+    // Body is already validated by fastify-type-provider-zod
     const emailData = request.body;
     const [createdEmail] = await request.server.db.emails.create(emailData);
 
@@ -50,29 +52,19 @@ export async function createMail(
 }
 
 export async function getMail(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: MailParams }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
-    const emailId = parseInt(id, 10);
 
-    if (isNaN(emailId)) {
-      reply.code(400).send({
-        success: false,
-        error: "Invalid email ID",
-        details: "ID must be a valid number",
-      });
-      return;
-    }
-
-    const email = await request.server.db.emails.findById(emailId);
+    const email = await request.server.db.emails.findById(id);
 
     if (!email) {
       reply.code(404).send({
         success: false,
         error: "Email not found",
-        details: `Email with ID ${emailId} does not exist`,
+        details: `Email with ID ${id} does not exist`,
       });
       return;
     }
@@ -91,38 +83,32 @@ export async function getMail(
 }
 
 export async function updateMail(
-  request: FastifyRequest<{ Params: { id: string }; Body: UpdateMailRequest }>,
+  request: FastifyRequest<{
+    Params: MailParams;
+    Body: UpdateMailRequest;
+  }>,
   reply: FastifyReply
 ) {
   try {
+    // Both params and body are already validated by fastify-type-provider-zod
     const { id } = request.params;
-    const emailId = parseInt(id, 10);
-
-    if (isNaN(emailId)) {
-      reply.code(400).send({
-        success: false,
-        error: "Invalid email ID",
-        details: "ID must be a valid number",
-      });
-      return;
-    }
-
-    const updateData = request.body;
+    const updateData = { ...request.body, id }; // Add the id to updateData
+    console.log("______Update Mail Request ID:", id);
 
     // Check if email exists
-    const existingEmail = await request.server.db.emails.findById(emailId);
+    const existingEmail = await request.server.db.emails.findById(id);
     if (!existingEmail) {
       reply.code(404).send({
         success: false,
         error: "Email not found",
-        details: `Email with ID ${emailId} does not exist`,
+        details: `Email with ID ${id} does not exist`,
       });
       return;
     }
 
     // Update the email
     const [updatedEmail] = await request.server.db.emails.update(
-      emailId,
+      id,
       updateData
     );
 
@@ -141,35 +127,26 @@ export async function updateMail(
 }
 
 export async function deleteMail(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: MailParams }>,
   reply: FastifyReply
 ) {
   try {
+    // Params are already validated and transformed by fastify-type-provider-zod
     const { id } = request.params;
-    const emailId = parseInt(id, 10);
-
-    if (isNaN(emailId)) {
-      reply.code(400).send({
-        success: false,
-        error: "Invalid email ID",
-        details: "ID must be a valid number",
-      });
-      return;
-    }
 
     // Check if email exists
-    const existingEmail = await request.server.db.emails.findById(emailId);
+    const existingEmail = await request.server.db.emails.findById(id);
     if (!existingEmail) {
       reply.code(404).send({
         success: false,
         error: "Email not found",
-        details: `Email with ID ${emailId} does not exist`,
+        details: `Email with ID ${id} does not exist`,
       });
       return;
     }
 
     // Delete the email
-    await request.server.db.emails.delete(emailId);
+    await request.server.db.emails.delete(id);
 
     reply.code(200).send();
   } catch (error) {

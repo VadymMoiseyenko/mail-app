@@ -1,33 +1,45 @@
-import { FastifyInstance } from "fastify/types/instance";
+import { FastifyInstance } from "fastify";
+import { ZodTypeProvider } from "fastify-type-provider-zod";
 import * as controller from "./mail.controller";
 import {
   createMailBodySchema,
   paramsSchema,
   updateMailBodySchema,
-} from "./mail.schema";
+} from "../../../../../common";
 
 export default async function mailRoutes(fastify: FastifyInstance) {
-  fastify.get("/", {
+  const app = fastify.withTypeProvider<ZodTypeProvider>();
+
+  app.get("/", {
     handler: controller.listMails,
   });
 
-  fastify.post("/", {
-    schema: { body: createMailBodySchema },
+  app.post("/", {
+    schema: {
+      body: createMailBodySchema,
+    },
     handler: controller.createMail,
   });
 
-  fastify.get("/:id", {
-    schema: { params: paramsSchema },
+  app.get("/:id", {
+    schema: {
+      params: paramsSchema,
+    },
     handler: controller.getMail,
   });
 
-  fastify.put("/:id", {
-    schema: { body: updateMailBodySchema, params: paramsSchema },
+  app.put("/:id", {
+    schema: {
+      body: updateMailBodySchema,
+      params: paramsSchema,
+    },
     handler: controller.updateMail,
   });
 
-  fastify.delete("/:id", {
-    schema: { params: paramsSchema },
+  app.delete("/:id", {
+    schema: {
+      params: paramsSchema,
+    },
     handler: controller.deleteMail,
   });
 }

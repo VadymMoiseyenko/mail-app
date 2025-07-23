@@ -1,5 +1,5 @@
+import { CreateMailRequest, UpdateMailRequest } from "../../../../../common";
 import { Knex } from "knex";
-import { CreateMailRequest, Mail, UpdateMailRequest } from "./mail.types";
 
 export class EmailRepository {
   private db: Knex;

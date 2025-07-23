@@ -1,6 +1,6 @@
 import styles from "./MailList.module.css";
-import { Mail } from "@common/types/mail";
 import MailItem from "./MailItem";
+import { Mail } from "@common/schema";
 
 interface MailListProps {
   mails: Mail[];

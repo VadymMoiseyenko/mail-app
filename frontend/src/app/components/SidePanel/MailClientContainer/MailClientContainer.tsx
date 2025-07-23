@@ -2,10 +2,10 @@
 
 import { SearchMail } from "./SearchMail";
 import MailList from "./MailList";
-import { Mail } from "@common/types";
 import { useEffect, useState } from "react";
 import { getMails } from "@/lib/api/mailService";
 import { useDebounce } from "use-debounce";
+import { Mail } from "@common/index";
 
 interface MailClientContainerProps {
   mails: Mail[];

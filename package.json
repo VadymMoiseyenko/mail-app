@@ -1,0 +1,26 @@
+{
+  "name": "mail-app",
+  "version": "1.0.0",
+  "description": "Mail application with shared dependencies",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "dependencies": {
+    "zod": "^4.0.5",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "scripts": {
+    "build": "yarn workspace frontend build && yarn workspace backend build",
+    "dev:frontend": "yarn workspace frontend dev",
+    "dev:backend": "yarn workspace backend dev",
+    "install:all": "yarn install && yarn workspace frontend install && yarn workspace backend install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
