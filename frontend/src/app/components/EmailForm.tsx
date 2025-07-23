@@ -71,20 +71,6 @@ export default function EmailForm({
     },
   });
 
-  // Update form values when initialData changes
-  // useEffect(() => {
-  //   if (initialData) {
-  //     reset({
-  //       to: initialData.to,
-  //       cc: initialData.cc,
-  //       bcc: initialData.bcc,
-  //       subject: initialData.subject,
-  //       body: initialData.body,
-  //     });
-  //   }
-  // }, [initialData, reset]);
-
-  // Enable editing when any field changes in view mode
   useEffect(() => {
     if (mode === "view" && isDirty) {
       setIsEditing(true);
@@ -92,7 +78,6 @@ export default function EmailForm({
   }, [mode, isDirty]);
 
   const onSubmit = async (data: CreateMailRequest | UpdateMailRequest) => {
-    debugger;
     if (isReadOnly && !isEditing) return;
 
     try {

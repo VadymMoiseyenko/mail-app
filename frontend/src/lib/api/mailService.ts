@@ -19,8 +19,6 @@ async function deleteMail(mailId: number): Promise<void> {
     );
     console.log("Delete response:", response.status);
 
-    debugger;
-
     if (!response.status || response.status !== 200) {
       throw new Error(response.data.error || "Failed to delete mail");
     }
